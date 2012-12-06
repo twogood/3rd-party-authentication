@@ -189,7 +189,7 @@ if (! class_exists('ThirdPartyPlugin')) {
 		}
 		
 		function login_failed($username) {
-			if (!function_exists('wp_create_user')) {
+			if (!function_exists('wp_insert_user')) {
 				include 'wp-includes/registration.php';
 			}
 			$create_users = (bool) get_option('3rd_party_google_apps_create');
@@ -197,7 +197,11 @@ if (! class_exists('ThirdPartyPlugin')) {
 				$user = get_userdatabylogin($username);
 				if ( !$user || ($user->user_login != $username) ) {
 					$random_password = wp_generate_password( 12, false );
-					$user_id = wp_create_user( $username, $random_password, $username);
+					$user_id = wp_insert_user(array(
+						'user_login' => $username, 
+						'user_pass' => $random_password, 
+						'user_email'=> $username,
+					));
 				}
 				return $user_id;
 			}
