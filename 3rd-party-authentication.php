@@ -201,6 +201,7 @@ if (! class_exists('ThirdPartyPlugin')) {
 						'user_login' => $username, 
 						'user_pass' => $random_password, 
 						'user_email'=> $username,
+						'role' => get_option( 'msum_default_user_role', get_option( 'default_role' ) ),
 					));
 				}
 				return $user_id;
